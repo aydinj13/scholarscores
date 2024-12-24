@@ -1,7 +1,4 @@
 import type { Metadata } from "next";
-import { SignedIn, UserButton } from "@clerk/nextjs";
-import { SignInButton } from "@clerk/nextjs";
-import { SignedOut } from "@clerk/nextjs";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Inter } from "next/font/google"
 import "./globals.css"
@@ -23,12 +20,6 @@ export default function RootLayout({
     <ClerkProvider>
     <html lang="en">
     <body className={inter.className}>
-        <SignedOut>
-          <SignInButton />
-        </SignedOut>
-        <SignedIn>
-          <UserButton />
-        </SignedIn>
         {children}
       </body>
     </html>
