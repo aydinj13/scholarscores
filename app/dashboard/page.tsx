@@ -1,7 +1,7 @@
+import Header from "@/components/Header";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { supabase } from "@/supabaseClient";
-import { UserButton } from "@clerk/nextjs";
 import Link from "next/link";
 
 async function Dashboard() {
@@ -21,10 +21,8 @@ async function Dashboard() {
 
   return (
     <div>
-      <div className="flex justify-end items-center p-5 lg:pr-10">
-        <UserButton />
-      </div>
-      <p className="font-bold text-3xl ml-5">Dashboard</p>
+      <Header />
+      <p className="font-bold text-3xl ml-5 mt-5">Dashboard</p>
       <div className="ml-5">
         <p className="my-5 font-bold">My Schools</p>
         <div className="grid grid-cols-3 gap-8">

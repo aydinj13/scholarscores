@@ -42,7 +42,7 @@ function SchoolPage() {
             </CardHeader>
             <CardFooter>
               <Button asChild>
-              <Link href="/dashboard/lakeridgeacademy/ms-boys-basketball">
+              <Link href="/dashboard/lakeridgeacademy/team/ms-boys-basketball">
                 View Team
                 </Link>
               </Button>
