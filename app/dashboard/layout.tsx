@@ -1,4 +1,4 @@
-import { UserButton } from "@clerk/nextjs";
+import { ClerkLoaded } from "@clerk/nextjs";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -11,9 +11,10 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }>) {
   return (
+    <ClerkLoaded>
     <div>
-      <UserButton />
       {children}
     </div>
+    </ClerkLoaded>
   )
 }
