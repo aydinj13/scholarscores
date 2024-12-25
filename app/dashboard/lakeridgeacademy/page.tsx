@@ -2,7 +2,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import Image from "next/image"
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
 
 function SchoolPage() {
@@ -24,7 +24,7 @@ function SchoolPage() {
     <AvatarFallback>CN</AvatarFallback>
   </Avatar>
   <p className="ml-4 text-3xl font-bold">Lake Ridge Academy</p>
-  <Badge className="ml-3 px-3 py-1 rounded-full bg-yellow-400 text-yellow-900 font-semibold shadow-md">
+  <Badge className="ml-3 px-3 py-1 rounded-full bg-yellow-400 text-yellow-900 font-semibold shadow-md hover:bg-yellow-500">
     Gold
   </Badge>
   <div>
@@ -42,8 +42,13 @@ function SchoolPage() {
             </CardHeader>
             <CardFooter>
               <Button asChild>
-              <Link href="/dashboard/lakeridgeacademy">
+              <Link href="/dashboard/lakeridgeacademy/ms-boys-basketball">
                 View Team
+                </Link>
+              </Button>
+              <Button asChild>
+              <Link href="/dashboard/lakeridgeacademy/insert-data">
+                Insert Stats
                 </Link>
               </Button>
             </CardFooter>
