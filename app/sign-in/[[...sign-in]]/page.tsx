@@ -6,6 +6,7 @@ import * as Clerk from "@clerk/elements/common";
 import * as SignIn from "@clerk/elements/sign-in";
 import Image from "next/image";
 
+
 export default function SignInPage() {
   return (
     <div className="grid w-full flex-grow items-center px-4 py-5 justify-center">
