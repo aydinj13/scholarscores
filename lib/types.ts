@@ -1,0 +1,59 @@
+// types.ts
+
+export interface School {
+    id: string;
+    name: string;
+    slug: string;
+    description: string;
+    banner_url: string;
+    logo_url: string;
+    annual_fee_paid: boolean;
+    created_at: string;
+    updated_at: string;
+  }
+  
+  export interface Team {
+    id: string;
+    name: string;
+    slug: string;
+    sport: "basketball" | "soccer" | "volleyball" | "football";
+    wins: number;
+    losses: number;
+    school_id: string;
+    head_coach: string;
+    age: "ms" | "hs";
+    gender: "boys" | "girls";
+    created_at: string;
+    updated_at: string;
+  }
+  
+  export interface Competition {
+    id: string;
+    home_team: string;
+    away_team: string;
+    home_score?: number;
+    away_score?: number;
+    date: string;
+    time: string;
+    location: string;
+    description: string;
+    live: boolean;
+    quarter?: number;
+    status: "scheduled" | "in_progress" | "completed" | "cancelled";
+    sport: "basketball" | "soccer" | "volleyball" | "football";
+    school_id: string;
+    created_at: string;
+    updated_at: string;
+  }
+  
+  // You might also want to create some utility types
+  export type SportType = "basketball" | "soccer" | "volleyball" | "football";
+  export type AgeGroup = "ms" | "hs";
+  export type Gender = "boys" | "girls";
+  export type CompetitionStatus = "scheduled" | "in_progress" | "completed" | "cancelled";
+  
+  // Response types for Supabase queries
+  export interface SupabaseResponse<T> {
+    data: T | null;
+    error: Error | null;
+  }

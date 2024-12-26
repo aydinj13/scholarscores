@@ -61,7 +61,7 @@ function EditTeamPage() {
     setLoading(true);
     setMessage(null);
 
-    const { data, error } = await supabase
+    const { error } = await supabase
       .from("teams")
       .update([
         {

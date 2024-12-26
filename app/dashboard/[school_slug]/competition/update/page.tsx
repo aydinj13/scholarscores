@@ -18,6 +18,8 @@ function EditCompetitionPage() {
   const [away_team, setAwayTeam] = useState("");
   const [home_score, setHomeScore] = useState("");
   const [away_score, setAwayScore] = useState("");
+  const [home_bonus, setHomeBonus] = useState(false)
+  const [away_bonus, setAwayBonus] = useState(false)
   const [location, setLocation] = useState("");
   const [host_school, setHostSchool] = useState("");
   const [date, setDate] = useState(""); 
@@ -63,12 +65,24 @@ function EditCompetitionPage() {
     setAwayTeam(data.away_team);
     setHomeScore(data.home_score.toString());
     setAwayScore(data.away_score.toString());
+    setHomeBonus(data.home_bonus)
+    setAwayBonus(data.away_bonus)
     setLocation(data.location);
     setHostSchool(data.host_school);
     setDate(data.date);
     setLive(data.live);
     setQuarter(data.quarter || "");
     setTime(data.time || "");
+  };
+
+  const handleScoreUpdate = (team: "home" | "away", points: number) => {
+    if (team === "home") {
+      const newHomeScore = parseInt(home_score) + points;
+      setHomeScore(newHomeScore.toString());
+    } else {
+      const newAwayScore = parseInt(away_score) + points;
+      setAwayScore(newAwayScore.toString());
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -95,13 +109,15 @@ function EditCompetitionPage() {
     setLoading(true);
     setMessage(null);
 
-    const { data, error } = await supabase
+    const { error } = await supabase
       .from("competitions")
       .update({
         home_team,
         away_team,
         home_score: parseInt(home_score),
         away_score: parseInt(away_score),
+        home_bonus,
+        away_bonus,
         location,
         host_school,
         date,
@@ -150,7 +166,7 @@ function EditCompetitionPage() {
             <span className="flex items-center">
               {competition.home_team} vs {competition.away_team}
               {competition.live && (
-                <Badge variant="destructive" className="ml-2">
+                <Badge variant="destructive" className="ml-2 animate-pulse text-white font-semibold rounded-lg">
                   Q{competition.quarter}
                 </Badge>
               )}
@@ -195,26 +211,53 @@ function EditCompetitionPage() {
             <label htmlFor="home_score" className="block text-sm font-medium mb-1">
               Home Score:
             </label>
-            <Input
-              type="number"
-              id="home_score"
-              placeholder="Enter Points"
-              value={home_score}
-              onChange={(e) => setHomeScore(e.target.value)}
-            />
+            <div className="flex items-center">
+              <Input
+                type="number"
+                id="home_score"
+                placeholder="Enter Points"
+                value={home_score}
+                onChange={(e) => setHomeScore(e.target.value)}
+              />
+              <div className="ml-2 flex space-x-2 ">
+                <Button size="sm" variant="accent" onClick={() => handleScoreUpdate("home", 1)}>+1</Button>
+                <Button size="sm" variant="accent" onClick={() => handleScoreUpdate("home", 2)}>+2</Button>
+                <Button size="sm" variant="accent" onClick={() => handleScoreUpdate("home", 3)}>+3</Button>
+              </div>
+            </div>
+
+          <div className="flex items-center space-x-4 mt-3">
+            <label htmlFor="home_bonus" className="text-sm font-medium">
+              Bonus:
+            </label>
+            <Switch id="home_bonus" checked={home_bonus} onCheckedChange={(checked) => setHomeBonus(checked)} />
+          </div>
           </div>
 
           <div>
             <label htmlFor="away_score" className="block text-sm font-medium mb-1">
               Away Score:
             </label>
-            <Input
-              type="number"
-              id="away_score"
-              placeholder="Enter Points"
-              value={away_score}
-              onChange={(e) => setAwayScore(e.target.value)}
-            />
+            <div className="flex items-center">
+              <Input
+                type="number"
+                id="away_score"
+                placeholder="Enter Points"
+                value={away_score}
+                onChange={(e) => setAwayScore(e.target.value)}
+              />
+              <div className="ml-2 flex space-x-2">
+                <Button size="sm" variant="accent" onClick={() => handleScoreUpdate("away", 1)}>+1</Button>
+                <Button size="sm" variant="accent" onClick={() => handleScoreUpdate("away", 2)}>+2</Button>
+                <Button size="sm" variant="accent" onClick={() => handleScoreUpdate("away", 3)}>+3</Button>
+              </div>
+            </div>
+            <div className="flex items-center space-x-4 mt-3">
+            <label htmlFor="away_bonus" className="text-sm font-medium">
+              Bonus:
+            </label>
+            <Switch id="away_bonus" checked={away_bonus} onCheckedChange={(checked) => setAwayBonus(checked)} />
+          </div>
           </div>
 
           <div>

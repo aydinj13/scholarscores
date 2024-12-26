@@ -45,7 +45,7 @@ function InsertPage() {
     setLoading(true);
     setMessage(null);
 
-    const { data, error } = await supabase
+    const { error } = await supabase
       .from("competitions")
       .insert([{
         home_team,

@@ -1,3 +1,4 @@
+import Header from "@/components/Header";
 import { ClerkLoaded } from "@clerk/nextjs";
 import type { Metadata } from "next";
 
@@ -13,6 +14,7 @@ export default function DashboardLayout({
   return (
     <ClerkLoaded>
     <div>
+      <Header />
       {children}
     </div>
     </ClerkLoaded>

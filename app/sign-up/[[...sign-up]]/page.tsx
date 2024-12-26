@@ -8,37 +8,39 @@ import Image from "next/image";
 
 export default function SignUpPage() {
   return (
-    <div className="grid w-full flex-grow items-center px-4 py-5 justify-center">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-500 to-teal-500 px-4 py-10">
       <SignUp.Root>
         <SignUp.Step
           name="start"
-          className="space-y-6 rounded-2xl bg-[radial-gradient(circle_at_50%_0%,theme(colors.white/10%),transparent)] px-4 py-10 ring-1 ring-inset ring-neutral/2 w-96 "
+          className="space-y-8 rounded-2xl bg-white bg-opacity-90 shadow-xl p-8 sm:w-96 w-full"
         >
           <header className="text-center">
-            <div className="mx-auto w-10 h-10">
+            <div className="mx-auto w-14 h-14 mb-4">
               <Image
-                src="/logo.png" // Path to your PNG logo in the public directory
+                src="/logo.png"
                 alt="Logo"
-                width={30} // Adjust the width according to your needs
-                height={30} // Adjust the height according to your needs
-                className="object-contain rounded-lg" // Ensures the logo scales properly within its container
+                width={50}
+                height={50}
+                className="object-contain rounded-lg"
               />
             </div>
-            <h1 className="mt-4 text-xl font-medium tracking-tight text-black">
-              Create an account
-            </h1>
+            <h1 className="text-2xl font-semibold text-gray-800">Create an Account</h1>
           </header>
-          <Clerk.GlobalError className="block text-sm text-red-400" />
-          <div className="grid grid-cols-1 gap-x-4">
+          <Clerk.GlobalError className="text-center text-sm text-red-500" />
+          <div className="space-y-6">
             <Clerk.Connection name="google" asChild>
-              <Button size="sm" type="button">
+              <Button
+                size="sm"
+                variant="outline"
+                className="w-full flex justify-center items-center bg-white text-gray-800 hover:bg-gray-100"
+              >
                 <Clerk.Loading scope="provider:google">
                   {(isLoading) =>
                     isLoading ? (
-                      <Icons.spinner className="size-4 animate-spin" />
+                      <Icons.spinner className="w-4 h-4 animate-spin mr-2" />
                     ) : (
                       <>
-                        <Icons.google className="mr-2 size-4" />
+                        <Icons.google className="mr-2 w-5 h-5 text-blue-500" />
                         Google
                       </>
                     )
@@ -49,86 +51,86 @@ export default function SignUpPage() {
           </div>
           <div className="space-y-4">
             <Clerk.Field name="emailAddress" className="space-y-2">
-              <Clerk.Label className="text-sm font-medium text-black">
-                Email address
+              <Clerk.Label className="text-sm font-medium text-gray-700">
+                Email Address
               </Clerk.Label>
               <Clerk.Input
-                type="text"
+                type="email"
                 required
-                className="w-full rounded-md bg-neutral-900 px-3.5 py-2 text-sm text-black outline-none ring-1 ring-inset ring-zinc-700 hover:ring-zinc-600 focus:bg-transparent focus:ring-[1.5px] focus:ring-blue-400 data-[invalid]:ring-red-400"
+                className="w-full rounded-md bg-gray-50 border border-gray-300 px-4 py-2 text-sm text-gray-700 focus:ring-2 focus:ring-blue-500 outline-none"
               />
-              <Clerk.FieldError className="block text-sm text-red-400" />
+              <Clerk.FieldError className="block text-sm text-red-500" />
             </Clerk.Field>
+
             <Clerk.Field name="password" className="space-y-2">
-              <Clerk.Label className="text-sm font-medium text-black">
+              <Clerk.Label className="text-sm font-medium text-gray-700">
                 Password
               </Clerk.Label>
               <Clerk.Input
                 type="password"
                 required
-                className="w-full rounded-md bg-neutral-900 px-3.5 py-2 text-sm text-black outline-none ring-1 ring-inset ring-zinc-700 hover:ring-zinc-600 focus:bg-transparent focus:ring-[1.5px] focus:ring-blue-400 data-[invalid]:ring-red-400"
+                className="w-full rounded-md bg-gray-50 border border-gray-300 px-4 py-2 text-sm text-gray-700 focus:ring-2 focus:ring-blue-500 outline-none"
               />
-              <Clerk.FieldError className="block text-sm text-red-400" />
+              <Clerk.FieldError className="block text-sm text-red-500" />
             </Clerk.Field>
           </div>
           <SignUp.Action
             submit
-            className="relative isolate w-full rounded-md bg-blue-600 px-3.5 py-1.5 text-center text-sm font-medium text-black shadow-[0_1px_0_0_theme(colors.white/10%)_inset,0_0_0_1px_theme(colors.white/5%)] outline-none before:absolute before:inset-0 before:-z-10 before:rounded-md before:bg-white/5 before:opacity-0 hover:before:opacity-100 focus-visible:outline-[1.5px] focus-visible:outline-offset-2 focus-visible:outline-blue-400 active:text-black/70 active:before:bg-black/10"
+            className="w-full rounded-md bg-blue-600 text-white py-2 text-center font-medium hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
             Sign Up
           </SignUp.Action>
-          <p className="text-center text-sm text-zinc-400">
-            Have an account?{" "}
+          <p className="text-center text-sm text-gray-500">
+            Already have an account?{" "}
             <Link
               href="/sign-in"
-              className="font-medium text-black decoration-white/20 underline-offset-4 outline-none hover:underline focus-visible:underline"
+              className="font-medium text-blue-600 hover:underline"
             >
               Sign in
             </Link>
           </p>
         </SignUp.Step>
+
         <SignUp.Step
           name="verifications"
-          className="w-full space-y-6 rounded-2xl bg-neutral-900 bg-[radial-gradient(circle_at_50%_0%,theme(colors.white/10%),transparent)] px-4 py-10 ring-1 ring-inset ring-white/5 sm:w-96 sm:px-8"
+          className="space-y-8 rounded-2xl bg-white bg-opacity-90 shadow-xl p-8 sm:w-96 w-full"
         >
           <header className="text-center">
-            <div className="mx-auto w-10 h-10">
+            <div className="mx-auto w-14 h-14 mb-4">
               <Image
-                src="/logo.png" // Path to your PNG logo in the public directory
+                src="/logo.png"
                 alt="Logo"
-                width={40} // Adjust the width according to your needs
-                height={40} // Adjust the height according to your needs
-                className="object-contain rounded-lg" // Ensures the logo scales properly within its container
+                width={50}
+                height={50}
+                className="object-contain rounded-lg"
               />
             </div>
-            <h1 className="mt-4 text-xl font-medium tracking-tight text-black">
-              Verify email code
-            </h1>
+            <h1 className="text-2xl font-semibold text-gray-800">Verify Your Email</h1>
           </header>
-          <Clerk.GlobalError className="block text-sm text-red-400" />
+          <Clerk.GlobalError className="text-center text-sm text-red-500" />
           <SignUp.Strategy name="email_code">
             <Clerk.Field name="code" className="space-y-2">
-              <Clerk.Label className="text-sm font-medium text-black">
-                Email code
+              <Clerk.Label className="text-sm font-medium text-gray-700">
+                Email Code
               </Clerk.Label>
               <Clerk.Input
                 required
-                className="w-full rounded-md bg-neutral-900 px-3.5 py-2 text-sm text-black outline-none ring-1 ring-inset ring-zinc-700 hover:ring-zinc-600 focus:bg-transparent focus:ring-[1.5px] focus:ring-blue-400 data-[invalid]:ring-red-400"
+                className="w-full rounded-md bg-gray-50 border border-gray-300 px-4 py-2 text-sm text-gray-700 focus:ring-2 focus:ring-blue-500 outline-none"
               />
-              <Clerk.FieldError className="block text-sm text-red-400" />
+              <Clerk.FieldError className="block text-sm text-red-500" />
             </Clerk.Field>
             <SignUp.Action
               submit
-              className="relative isolate w-full rounded-md bg-blue-500 px-3.5 py-1.5 text-center text-sm font-medium text-black shadow-[0_1px_0_0_theme(colors.white/10%)_inset,0_0_0_1px_theme(colors.white/5%)] outline-none before:absolute before:inset-0 before:-z-10 before:rounded-md before:bg-white/5 before:opacity-0 hover:before:opacity-100 focus-visible:outline-[1.5px] focus-visible:outline-offset-2 focus-visible:outline-blue-400 active:text-black/70 active:before:bg-black/10"
+              className="w-full rounded-md bg-blue-600 text-white py-2 text-center font-medium hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
-              Finish registration
+              Finish Registration
             </SignUp.Action>
           </SignUp.Strategy>
-          <p className="text-center text-sm text-zinc-400">
-            Have an account?{" "}
+          <p className="text-center text-sm text-gray-500">
+            Already have an account?{" "}
             <Link
               href="/sign-in"
-              className="font-medium text-black decoration-white/20 underline-offset-4 outline-none hover:underline focus-visible:underline"
+              className="font-medium text-blue-600 hover:underline"
             >
               Sign in
             </Link>
