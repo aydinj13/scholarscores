@@ -16,7 +16,7 @@ function InsertPage() {
   const [sport, setSport] = useState("basketball");
   const [age, setAge] = useState("ms");
   const [gender, setGender] = useState("boys");
-  const [head_coach, setHeadCoach] = useState("");
+  const [coach_id, setHeadCoach] = useState("");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState(null);
 
@@ -30,7 +30,7 @@ function InsertPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!school || !name || !sport || !age || !gender || !head_coach) {
+    if (!school || !name || !sport || !age || !gender || !coach_id) {
       setMessage("All fields are required.");
       return;
     }
@@ -46,7 +46,7 @@ function InsertPage() {
         sport,
         age,
         gender,
-        head_coach,
+        coach_id,
         slug: teamSlug,
       },
     ]);
@@ -142,11 +142,11 @@ function InsertPage() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="head_coach">Head Coach</Label>
+                <Label htmlFor="coach_id">Head Coach</Label>
                 <Input
-                  id="head_coach"
+                  id="coach_id"
                   placeholder="Enter head coach name"
-                  value={head_coach}
+                  value={coach_id}
                   onChange={(e) => setHeadCoach(e.target.value)}
                   className="w-full"
                 />

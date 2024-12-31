@@ -1,52 +1,66 @@
 "use client"
-
+ 
 import { ColumnDef } from "@tanstack/react-table"
-
-// This type is used to define the shape of our data.
-// You can use a Zod schema here if you want.
-export type IndividualStats = {
+import { Button } from "@/components/ui/button"
+import { ArrowUpDown } from "lucide-react"
+ 
+export type TeamGameStats = {
   id: string
-  student_id: string
-  competition_id: string
-  first_name: string
-  minutes: number
-  points: number
-  assists: number
-  /*
-  rebounds: number
-  fouls: number
-  blocks: number
-  steals: number
-  */
+  competition_name: string
+  competition_date: string
+  field_goals_attempted: number
+  field_goals_made: number
+  three_pointers_attempted: number
+  three_pointers_made: number
 }
-
-export const columns: ColumnDef<IndividualStats>[] = [
+ 
+export const columns: ColumnDef<TeamGameStats>[] = [
   {
-    accessorKey: "id",
-    header: "ID",
+    accessorKey: "competition_name",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Game
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      )
+    },
   },
   {
-    accessorKey: "student_id",
-    header: "Student ID",
-  },  
-  {
-    accessorKey: "competition_id",
-    header: "Game ID",
+    accessorKey: "competition_date",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Date
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      )
+    },
   },
   {
-    accessorKey: "first_name",
-    header: "Name",
+    accessorKey: "field_goals",
+    header: "Field Goals",
+    cell: ({ row }) => {
+      const made = row.original.field_goals_made
+      const attempted = row.original.field_goals_attempted
+      const percentage = attempted > 0 ? ((made / attempted) * 100).toFixed(1) : "0.0"
+      return `${made}/${attempted} (${percentage}%)`
+    },
   },
   {
-    accessorKey: "minutes",
-    header: "Minutes",
-  },
-  {
-    accessorKey: "points",
-    header: "Points",
-  },
-  {
-    accessorKey: "assists",
-    header: "Assists",
+    accessorKey: "three_pointers",
+    header: "3-Pointers",
+    cell: ({ row }) => {
+      const made = row.original.three_pointers_made
+      const attempted = row.original.three_pointers_attempted
+      const percentage = attempted > 0 ? ((made / attempted) * 100).toFixed(1) : "0.0"
+      return `${made}/${attempted} (${percentage}%)`
+    },
   },
 ]

@@ -2,15 +2,17 @@
 import { supabase } from "@/supabaseClient";
 import TeamDetailsClient from "./TeamDetailsClient";
 
+
 export default async function Team({ params }: { params: { slug: string } }) {
   const { slug } = params;
 
   // Fetch team and associated students
   const { data: teamData, error: teamError } = await supabase
-    .from("teams")
-    .select("*, students (id, first_name, last_name, slug, position)") // Fetch team and associated students
-    .eq("slug", slug)
-    .single(); // Assuming slug is unique for teams
+  .from("teams")
+  .select("*, students (id, first_name, last_name, slug, position)") // Fetch team and associated students
+  .eq("slug", slug)
+  .single(); // Assuming slug is unique for teams
+
 
   if (teamError) {
     console.error("Error fetching team data:", teamError.message);
@@ -26,7 +28,7 @@ export default async function Team({ params }: { params: { slug: string } }) {
   // Fetch schedule for the team
   const { data: schedule, error: scheduleError } = await supabase
     .from("competitions")
-    .select("id, competition_date: date, away_team, home_team, location")
+    .select("id, competition_date: date, away_team, home_team, location, is_win")
     .eq("team_id", teamData.id); // Assuming team_id matches the team's ID
 
   if (scheduleError) {

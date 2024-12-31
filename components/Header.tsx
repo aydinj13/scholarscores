@@ -96,7 +96,7 @@ function Header() {
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem className="flex cursor-pointer items-center gap-2 rounded-md p-2 text-sm hover:bg-gray-100 focus:bg-gray-100 focus:text-gray-900" asChild>
-          <Link href="/dashboard/school/new">
+          <Link href="/school/new">
             <School className="h-4 w-4 text-red-500" />
             <div className="flex flex-col">
               <span className="font-medium">New School</span>

@@ -26,13 +26,14 @@ interface TeamData {
   description?: string;
 }
 
+
 interface Competition {
   id: number;
   competition_date: string;
   away_team: string;
   home_team: string;
   location: string;
-  is_win: boolean | null; // Add win/loss status for past competitions
+  is_win?: boolean | null;
 }
 
 export default function TeamDetailsClient({
@@ -78,12 +79,10 @@ export default function TeamDetailsClient({
     // If competition date is in the past, check for win/loss status
     if (compDate < now) {
       if (isWin === null) {
-        return (
-          <span className="text-gray-500">No result yet</span> // No result yet
-        );
+        return <span className="text-gray-500">No result yet</span>;
       }
       return (
-        <span className={`font-bold text-${isWin ? "green" : "red"}-600`}>
+        <span className={isWin ? "font-bold text-green-600" : "font-bold text-red-600"}>
           {isWin ? "W" : "L"}
         </span>
       );
@@ -92,7 +91,6 @@ export default function TeamDetailsClient({
     // Otherwise, mark it as upcoming
     return <span className="bg-blue-600 text-white px-2 py-1 rounded">Upcoming</span>;
   };
-  
 
   const sortedSchedule = [...schedule].sort(
     (a, b) => new Date(a.competition_date).getTime() - new Date(b.competition_date).getTime()
@@ -116,7 +114,7 @@ export default function TeamDetailsClient({
               </div>
               <p className="text-blue-100">
                 {teamData.age === "ms" ? "Middle School" : "High School"} {" "}
-                {teamData.gender === "boys" ? "Boys" : "Girls"} {teamData.sport}
+                {teamData.gender === "boys" ? "Boys" : "Girls"} {teamData.sport} • {}
               </p>
               <div className="flex items-center space-x-4 text-sm">
                 <span className="px-3 py-1 bg-blue-700 rounded-full">
@@ -231,37 +229,37 @@ export default function TeamDetailsClient({
                 {sortedSchedule.length > 0 ? (
                   <div className="grid grid-cols-1 gap-4">
                     {sortedSchedule.map((comp) => (
-                      <div
-                        key={comp.id}
-                        className="border rounded-lg p-4 bg-gray-50 shadow-sm hover:shadow-md transition"
-                      >
-                        <div className="flex justify-between items-center">
-                          <div>
-                            <p className="text-lg font-medium">
-                              {new Intl.DateTimeFormat("en-US", {
-                                month: "long",
-                                day: "numeric",
-                                year: "numeric",
-                              }).format(new Date(comp.competition_date))}
-                            </p>
-                            <p className="text-gray-700">
-                              {comp.away_team} @ {comp.home_team}
-                            </p>
-                          </div>
-                          <div className="flex items-center space-x-4">
-                            {formatCompetitionStatus(
-                              comp.competition_date,
-                              comp.is_win
-                            )}
-                            <Button variant="outline" asChild>
-                                <Link href={`/dashboard/lakeridgeacademy/competition/${comp.id}`}>
-                                View Matchup
-                                </Link>
-                                </Button>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
+  <div
+    key={comp.id}
+    className="border rounded-lg p-4 bg-gray-50 shadow-sm hover:shadow-md transition"
+  >
+    <div className="flex justify-between items-center">
+      <div>
+        <p className="text-lg font-medium">
+          {new Intl.DateTimeFormat("en-US", {
+            month: "long",
+            day: "numeric",
+            year: "numeric",
+          }).format(new Date(comp.competition_date))}
+        </p>
+        <p className="text-gray-700">
+          {comp.away_team} @ {comp.home_team}
+        </p>
+      </div>
+      <div className="flex items-center space-x-4">
+        {formatCompetitionStatus(
+          comp.competition_date,
+          comp.is_win!  // This will now be properly typed
+        )}
+        <Button variant="outline" asChild>
+          <Link href={`/dashboard/lakeridgeacademy/competition/${comp.id}`}>
+            View Matchup
+          </Link>
+        </Button>
+      </div>
+    </div>
+  </div>
+))}
                   </div>
                 ) : (
                   <p className="text-gray-500 text-center py-8">

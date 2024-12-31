@@ -8,6 +8,7 @@ import { DataTable } from "@/components/data-table";
 import { columns } from "./columns";
 import { team_columns } from "./team-columns";
 import { Trophy, MapPin, CalendarDays, Users, ChartBar, School } from "lucide-react";
+import Link from "next/link"
 
 interface Competition {
   id: string;
@@ -17,6 +18,7 @@ interface Competition {
   away_score: number;
   home_bonus: boolean;
   away_bonus: boolean;
+  slug: string;
   live: boolean;
   quarter?: number;
   time?: string;
@@ -53,14 +55,7 @@ interface TeamStat {
 async function getCompetitionData(competition_id: string) {
   const { data, error } = await supabase
     .from("competitions")
-    .select(`
-      *,
-      teams (
-        gender,
-        age,
-        sport
-      )
-    `)
+    .select("*, teams (slug, gender, age, sport)")
     .eq("id", competition_id);
 
   if (error) {
@@ -115,7 +110,7 @@ async function updateTeamResults(competition_id: string) {
   // Fetch competition data to get home and away scores and team IDs
   const { data: competition, error: competitionError } = await supabase
     .from("competitions")
-    .select("*, teams:home_team_id(wins, losses), teams:away_team_id(wins, losses), home_team, away_team, home_score, away_score")
+    .select("*, home_team, away_team, home_score, away_score")
     .eq("id", competition_id)
     .single();
 
@@ -284,7 +279,7 @@ export default function Competition({ params }: { params: { competition_id: stri
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
                 {/* Home Team */}
                 <div className="text-center space-y-2">
-                  <div className="text-2xl font-bold">{competition.home_team}</div>
+                  <div className="text-2xl font-bold"><Link href={`/dashboard/lakeridgeacademy/team/${competition.slug}`}>{competition.home_team}</Link></div>
                   <div className="text-4xl font-bold text-blue-600">
                     {competition.home_score}
                     {homeScoreChange !== null && (
@@ -358,7 +353,7 @@ export default function Competition({ params }: { params: { competition_id: stri
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-gray-600">
                 <div className="flex items-center">
                   <Users className="w-4 h-4 mr-2" />
-                  {competition.age} - {competition.gender} - {competition.sport}
+                  {competition.age.toUpperCase()} • {competition.gender.charAt(0).toUpperCase() + competition.gender.slice(1)} • {competition.sport.charAt(0).toUpperCase() + competition.sport.slice(1)}
                 </div>
                 <div className="flex items-center">
                   <MapPin className="w-4 h-4 mr-2" />

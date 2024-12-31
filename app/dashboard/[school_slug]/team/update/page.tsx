@@ -13,7 +13,7 @@ function EditTeamPage() {
   const [sport, setSport] = useState<"basketball" | "soccer" | "volleyball" | "football">("basketball");
   const [age, setAge] = useState<"ms" | "hs">("ms");
   const [gender, setGender] = useState<"boys" | "girls">("boys");
-  const [head_coach, setHeadCoach] = useState("");
+  const [coach_id, setHeadCoach] = useState("");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
 
@@ -47,13 +47,13 @@ function EditTeamPage() {
     setSport(data.sport);
     setAge(data.age);
     setGender(data.gender);
-    setHeadCoach(data.head_coach);
+    setHeadCoach(data.coach_id);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!name || !sport || !age || !gender || !head_coach) {
+    if (!name || !sport || !age || !gender || !coach_id) {
       setMessage("All fields are required.");
       return;
     }
@@ -69,7 +69,7 @@ function EditTeamPage() {
           sport,
           age,
           gender,
-          head_coach,
+          coach_id,
         },
       ])
       .eq("id", selectedTeam.id);
@@ -168,13 +168,13 @@ function EditTeamPage() {
               </Select>
             </div>
             <div>
-              <label htmlFor="head_coach" className="block text-sm font-medium mb-1">
+              <label htmlFor="coach_id" className="block text-sm font-medium mb-1">
                 Head Coach:
               </label>
               <Input
-                id="head_coach"
+                id="coach_id"
                 placeholder="Enter Head Coach Name"
-                value={head_coach}
+                value={coach_id}
                 onChange={(e) => setHeadCoach(e.target.value)}
               />
             </div>
